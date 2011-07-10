@@ -156,7 +156,7 @@ Wii.parsePrimaryWiimote = function(e) {
 	 *	matchups; this gets messy pretty quickly...
 	 */
 	if(typeof buttonPressed !== 'undefined' && wii_remote.evtsInterestedIn[buttonPressed] !== 'undefined') {
-		try { wii_remote.evtsInterestedIn[buttonPressed](wii_remote, wii_remoteCurrStatus); } catch(e) { alert(e.message); }
+		try { wii_remote.evtsInterestedIn[buttonPressed](wii_remote, wii_remoteCurrStatus); } catch(e) { alert(e.message); alert(Wii.currentBrowsingRemote); }
 	}
 	
 	/* Doing this in conjunction with preventDefault() halts an odd clicking bug or two. */
