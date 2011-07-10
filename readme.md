@@ -20,7 +20,7 @@ To play with a live example, load up the demo (_index.html_) on your own server,
 Questions, comments, criticism and praise can be directed to me at the following outlets:
 
 - You can email me at **ryan [at] venodesigns (dot) net**.  
-- You can hit me up on Twitter: [@ryanmcgrath](http://twitter.com/ryanmcgrath/)  
+- You can hit me up on Twitter: **[@ryanmcgrath](http://twitter.com/ryanmcgrath/)**  
 - Contact me through **[my website](http://venodesigns.net)**  
 - **Technical issues can be filed on the [wii-js GitHub Issues Tracker](https://github.com/ryanmcgrath/wii-js/issues)**  
 
