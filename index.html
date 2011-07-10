@@ -37,7 +37,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     <script src="js/wii.js"></script>
     <script>
-
         var wiimote = new Wii.Remote(1, {horizontal: true}),
             wiimote2 = new Wii.Remote(2, {horizontal: true}),
 			wiimote3 = new Wii.Remote(3, {horizontal: true}),
@@ -48,67 +47,67 @@
 			p4 = $('#player_4');
 
         wiimote.when('pressed_down', function() { 
-            p1.css({'top': parseInt(p1[0].position().top) + 50});
+            p1.css({'top': p1.position().top + 50});
         });
 
         wiimote.when('pressed_right', function() {
-        	p1.css({'left': parseInt(p1[0].position().left) + 50});
+        	p1.css({'left': p1.position().left + 50});
 		});
 
         wiimote.when('pressed_left', function() {
-			p1.css({'left': parseInt(p1[0].position().left) - 50});
+			p1.css({'left': p1.position().left - 50});
         });
 
         wiimote.when('pressed_up', function() { 
-            p1.css({'top': parseInt(p1[0].position().top) - 50}); 
+            p1.css({'top': p1.position().top - 50}); 
         });
         
         wiimote2.when('pressed_down', function() { 
-            p2.css({'top': parseInt(p2[0].position().top) + 50});
+            p2.css({'top': p2.position().top + 50});
         });
         
         wiimote2.when('pressed_right', function() {
-        	p2.css({'left': parseInt(p2[0].position().left) + 50});
+        	p2.css({'left': p2.position().left + 50});
 		});
 
         wiimote2.when('pressed_left', function() {
-			p2.css({'left': parseInt(p2[0].position().left) - 50});
+			p2.css({'left': p2.position().left - 50});
         });
 
         wiimote2.when('pressed_up', function() { 
-            p2.css({'top': parseInt(p2[0].position().top) - 50}); 
+            p2.css({'top': p2.position().top - 50}); 
         }); 
 
         wiimote3.when('pressed_down', function() { 
-            p3.css({'top': parseInt(p3[0].position().top) + 50});
+            p3.css({'top': p3.position().top + 50});
         });
         
         wiimote3.when('pressed_right', function() {
-        	p3.css({'left': parseInt(p3[0].position().left) + 50});
+        	p3.css({'left': p3.position().left + 50});
 		});
 
         wiimote3.when('pressed_left', function() {
-			p3.css({'left': parseInt(p3[0].position().left) - 50});
+			p3.css({'left': p3.position().left - 50});
         });
 
         wiimote3.when('pressed_up', function() { 
-            p3.css({'top': parseInt(p3[0].position().top) - 50}); 
+            p3.css({'top': p3.position().top - 50}); 
         });
 
         wiimote4.when('pressed_down', function() { 
-            p4.css({'top': parseInt(p4[0].position().top) + 50});
+            p4.css({'top': p4.position().top + 50});
         });
         
         wiimote4.when('pressed_right', function() {
-        	p4.css({'left': parseInt(p4[0].position().left) + 50});
+        	p4.css({'left': p4.position().left + 50});
 		});
 
         wiimote4.when('pressed_left', function() {
-			p4.css({'left': parseInt(p4[0].position().left) - 50});
+			p4.css({'left': p4.position().left - 50});
         });
 
         wiimote4.when('pressed_up', function() { 
-            p4.css({'top': parseInt(p4[0].position().top) - 50}); 
+            p4.css({'top': p4.position().top - 50}); 
         });
 		
         Wii.listen();
