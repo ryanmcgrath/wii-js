@@ -156,6 +156,13 @@ the other Wii-remotes. It's not a showstopper by any means, but for small games 
 I'll probably end up throttling this through the library by means of a flag, e.g "game_mode": true in the initial options.
 
 
+Todo List
+------------------------------------------------------------------------------------------------------------------
+- Build in functionality for multiple button presses at the same time (difficult to get right in this environment)
+- Determine canceling B-button/scrolling on pages ("app"/"game" style)
+- Determine feasibility of canceling out "1" press on the primary Wii-remote.
+
+
 Building and Developing
 ------------------------------------------------------------------------------------------------------------------
 If you'd like to help with this library, you're more than welcome to. Simply fork it on GitHub, work away, then
