@@ -48,67 +48,67 @@
 			p4 = $('#player_4');
 
         wiimote.when('pressed_down', function() { 
-            p1.css({'top': parseInt(p1[0].style.top) + 50});
+            p1.css({'top': parseInt(p1[0].position().top) + 50});
         });
 
         wiimote.when('pressed_right', function() {
-        	p1.css({'left': parseInt(p1[0].style.left) + 50});
+        	p1.css({'left': parseInt(p1[0].position().left) + 50});
 		});
 
         wiimote.when('pressed_left', function() {
-			p1.css({'left': parseInt(p1[0].style.left) - 50});
+			p1.css({'left': parseInt(p1[0].position().left) - 50});
         });
 
         wiimote.when('pressed_up', function() { 
-            p1.css({'top': parseInt(p1[0].style.top) - 50}); 
+            p1.css({'top': parseInt(p1[0].position().top) - 50}); 
         });
         
         wiimote2.when('pressed_down', function() { 
-            p2.css({'top': parseInt(p2[0].style.top) + 50});
+            p2.css({'top': parseInt(p2[0].position().top) + 50});
         });
         
         wiimote2.when('pressed_right', function() {
-        	p2.css({'left': parseInt(p2[0].style.left) + 50});
+        	p2.css({'left': parseInt(p2[0].position().left) + 50});
 		});
 
         wiimote2.when('pressed_left', function() {
-			p2.css({'left': parseInt(p2[0].style.left) - 50});
+			p2.css({'left': parseInt(p2[0].position().left) - 50});
         });
 
         wiimote2.when('pressed_up', function() { 
-            p2.css({'top': parseInt(p2[0].style.top) - 50}); 
+            p2.css({'top': parseInt(p2[0].position().top) - 50}); 
         }); 
 
         wiimote3.when('pressed_down', function() { 
-            p3.css({'top': parseInt(p3[0].style.top) + 50});
+            p3.css({'top': parseInt(p3[0].position().top) + 50});
         });
         
         wiimote3.when('pressed_right', function() {
-        	p3.css({'left': parseInt(p3[0].style.left) + 50});
+        	p3.css({'left': parseInt(p3[0].position().left) + 50});
 		});
 
         wiimote3.when('pressed_left', function() {
-			p3.css({'left': parseInt(p3[0].style.left) - 50});
+			p3.css({'left': parseInt(p3[0].position().left) - 50});
         });
 
         wiimote3.when('pressed_up', function() { 
-            p3.css({'top': parseInt(p3[0].style.top) - 50}); 
+            p3.css({'top': parseInt(p3[0].position().top) - 50}); 
         });
 
         wiimote4.when('pressed_down', function() { 
-            p4.css({'top': parseInt(p4[0].style.top) + 50});
+            p4.css({'top': parseInt(p4[0].position().top) + 50});
         });
         
         wiimote4.when('pressed_right', function() {
-        	p4.css({'left': parseInt(p4[0].style.left) + 50});
+        	p4.css({'left': parseInt(p4[0].position().left) + 50});
 		});
 
         wiimote4.when('pressed_left', function() {
-			p4.css({'left': parseInt(p4[0].style.left) - 50});
+			p4.css({'left': parseInt(p4[0].position().left) - 50});
         });
 
         wiimote4.when('pressed_up', function() { 
-            p4.css({'top': parseInt(p4[0].style.top) - 50}); 
+            p4.css({'top': parseInt(p4[0].position().top) - 50}); 
         });
 		
         Wii.listen();
