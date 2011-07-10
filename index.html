@@ -37,6 +37,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     <script src="js/wii.js"></script>
     <script>
+try {
         var wiimote = new Wii.Remote(1, {horizontal: true}),
             wiimote2 = new Wii.Remote(2, {horizontal: true}),
 			wiimote3 = new Wii.Remote(3, {horizontal: true}),
@@ -110,8 +111,7 @@
             p4.css({'top': parseInt(x[0].style.top) - 50}); 
         });
 		
-		try {
-        Wii.listen(); } catch(e) { }
+        Wii.listen(); } catch(e) { alert(e.message); }
     </script>
 </body>
 </html>
