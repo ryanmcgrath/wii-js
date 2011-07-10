@@ -27,6 +27,16 @@ Wii.Remote = function(remote_id, opts) {
 	this.opts = opts;
 	
 	/**
+	 *	Default these properties to undefined, since that's what
+	 *	the Wii returns anyway, and it's worth it to try and stay (somewhat)
+	 *	close to the core tech.
+	 */
+	this.x = undefined;
+	this.y = undefined;
+	this.roll = undefined;
+	this.last_known_distance_from_screen = undefined;
+	
+	/**
 	 *	If this is the "main" wii_remote, then the bitwise checks will fail
 	 *	because it's treated more as a "browsing" device. For these events,
 	 *	we'll just store the current wii_remote that's denoted as the "browsing"

@@ -104,9 +104,13 @@ Wii.listen = function() {
 			if(wii_remoteCurrStatus.isBrowsing) {
 				Wii.currentBrowsingRemote = wii_remote;
 			} else {
+				/*	Update these on each poll, since we've got the data anyway. */
+				wii_remote.x = wii_remoteCurrStatus.dpdScreenX;
+				wii_remote.y = wii_remoteCurrStatus.dpdScreenY;
+								
 				for(var evt in wii_remote.evtsInterestedIn) {
 					var evtHappened = Wii.DISPATCHER[evt](wii_remote, wii_remoteCurrStatus);
-					if(evtHappened) try { wii_remote.evtsInterestedIn[evt](wii_remote, wii_remoteCurrStatus); } catch(e) { alert(e.message); }
+					if(evtHappened) wii_remote.evtsInterestedIn[evt](wii_remote, wii_remoteCurrStatus);
 				}
 			}
 		}
@@ -151,12 +155,32 @@ Wii.parsePrimaryWiimote = function(e) {
 		wii_remoteCurrStatus = wii_remote.isEnabled(),
 		buttonPressed = Wii.PRIMARY_CONTROLLER_DISPATCHER[wii_remote.opts.horizontal ? 'horizontal' : 'vertical'][e.keyCode];
 	
+	/*	Grab these first, and on every pass. */
+	wii_remote.x = wii_remoteCurrStatus.dpdScreenX;
+	wii_remote.y = wii_remoteCurrStatus.dpdScreenY;
+	
 	/**
 	 *	Filter down and figure out which "event" we're really looking at based on code
 	 *	matchups; this gets messy pretty quickly...
 	 */
 	if(typeof buttonPressed !== 'undefined' && typeof wii_remote.evtsInterestedIn[buttonPressed] === 'function') {
 		wii_remote.evtsInterestedIn[buttonPressed](wii_remote, wii_remoteCurrStatus);
+	}
+	
+	/**
+	 *	Due to the difference in how these controls are caught, we need a second set of roll/distance-changes
+	 *	run here. Luckily, we can just re-use the dispatcher functions.
+	 */
+	if(typeof wii_remote.evtsInterestedIn['roll_change'] === 'function') {
+		if(Wii.DISPATCHER['roll_change'](wii_remote, wii_remoteCurrStatus)) {
+			wii_remote.evtsInterestedIn['roll_change'](wii_remote, wii_remoteCurrStatus);
+		}
+	}
+	
+	if(typeof wii_remote.evtsInterestedIn['distance_change'] === 'function') {
+		if(Wii.DISPATCHER['distance_change'](wii_remote, wii_remoteCurrStatus)) {
+			wii_remote.evtsInterestedIn['distance_change'](wii_remote, wii_remoteCurrStatus);
+		}
 	}
 	
 	/* Doing this in conjunction with preventDefault() halts an odd clicking bug or two. */
@@ -168,7 +192,7 @@ Wii.parsePrimaryWiimote = function(e) {
  *
  *	In order to keep things as performant as possible, we want DOM events (for the primary controller)
  *	to also be a 1:1 hash map lookup. This is PRIMARILY for the primary ("browsing") controller; all other
- *	controllers get their operations routed through the DISPATCHER below.
+ *	controllers get their operations routed through the DISPATCHER below. The keys below are keyCodes.
  */
 Wii.PRIMARY_CONTROLLER_DISPATCHER = {
 	vertical: {
@@ -237,6 +261,25 @@ Wii.DISPATCHER = {
 	'pressed_b': function(wii_remote, wii_remoteStatus) { return wii_remoteStatus.hold & 1024; },
 	'pressed_a': function(wii_remote, wii_remoteStatus) { return wii_remoteStatus.hold & 2048; },
 	
+	'roll_change': function(wii_remote, wii_remoteStatus) {
+		var roll = Math.atan2(wii_remoteStatus.dpdRollY, wii_remoteStatus.dpdRollX);
+		
+		if(roll !== wii_remote.roll) {
+			wii_remote.roll = roll;
+			return true;
+		}
+		
+		return false;
+	},
+	
+	'distance_change': function(wii_remote, wii_remoteStatus) {
+		if(wii_remoteStatus.dpdDistance !== wii_remote.last_known_distance_from_screen) {
+			wii_remote.last_known_distance_from_screen = wii_remoteStatus.dpdDistance;
+			return true;
+		}
+		return false;
+	},
+	
 	/**
 	 *	I'm keeping these noted here for legacy reasons, but by and large it's just not even
 	 *	worth trying to use the Nunchuk with anything in the browser; the primary controller
@@ -244,8 +287,7 @@ Wii.DISPATCHER = {
 	 */
 	'pressed_z': function(wii_remote, wii_remoteStatus) { return wii_remoteStatus.hold & 8192; },
 	'pressed_c': function(wii_remote, wii_remoteStatus) { return wii_remoteStatus.hold & 16384; }
-};
-/**
+};/**
  *	util.js
  *
  *	A basic utility wrapper; anything extra that's often re-used should
@@ -338,6 +380,16 @@ Wii.util = {
 Wii.Remote = function(remote_id, opts) {
 	this.remote_id = remote_id;
 	this.opts = opts;
+	
+	/**
+	 *	Default these properties to undefined, since that's what
+	 *	the Wii returns anyway, and it's worth it to try and stay (somewhat)
+	 *	close to the core tech.
+	 */
+	this.x = undefined;
+	this.y = undefined;
+	this.roll = undefined;
+	this.last_known_distance_from_screen = undefined;
 	
 	/**
 	 *	If this is the "main" wii_remote, then the bitwise checks will fail
