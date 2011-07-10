@@ -83,7 +83,7 @@ Wii.listen = function() {
 			} else {
 				for(var evt in wii_remote.evtsInterestedIn) {
 					var evtHappened = Wii.DISPATCHER[evt](wii_remote, wii_remoteCurrStatus);
-					if(evtHappened) wii_remote.evtsInterestedIn[evt](wii_remote, wii_remoteCurrStatus);
+					if(evtHappened) try { wii_remote.evtsInterestedIn[evt](wii_remote, wii_remoteCurrStatus); } catch(e) { alert(e.message); }
 				}
 			}
 		}
@@ -133,7 +133,7 @@ Wii.parsePrimaryWiimote = function(e) {
 	 *	matchups; this gets messy pretty quickly...
 	 */
 	if(typeof buttonPressed !== 'undefined' && wii_remote.evtsInterestedIn[buttonPressed] !== 'undefined') {
-		wii_remote.evtsInterestedIn[buttonPressed](wii_remote, wii_remoteCurrStatus);
+		try { wii_remote.evtsInterestedIn[buttonPressed](wii_remote, wii_remoteCurrStatus); } catch(e) { alert(e.message); }
 	}
 	
 	/* Doing this in conjunction with preventDefault() halts an odd clicking bug or two. */
