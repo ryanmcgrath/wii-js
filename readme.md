@@ -15,7 +15,7 @@ webpage at once, a dynamic not found in other web browsing mediums.
 You can find a built source file and a _minified_ source file for production use in the **/js/** directory.
 To play with a live example, load up the demo (_index.html_) on your own server, or feel free to use mine:
 
-    **wii-js Demo: [http://venodesigns.net/wii/](http://venodesigns.net/wii/  
+    **wii-js Demo: [http://venodesigns.net/wii/](http://venodesigns.net/wii/)**  
 
 Questions, comments, criticism and praise can be directed to me at the following outlets:
 
