@@ -18,7 +18,7 @@ blockquote, q { quotes: "" ""; }
 
 html {
     color: #333;
-	font: normal 24px/28px helvetica, arial, sans-serif;
+	font: normal 22px/26px helvetica, arial, sans-serif;
 	padding: 0px;
     background: #fff;
 	overflow: hidden !important;
@@ -26,7 +26,7 @@ html {
 
 body { overflow: hidden !important; padding: 20px; }
 
-h1 { background-color: #42a2cc; color: #f9f9f9; font-size: 50px; padding: 10px; }
+h1 { background-color: #42a2cc; color: #f9f9f9; font-size: 44px; padding: 10px; }
 
 a, a:visited { 
 	background-color: #42a2cc; 
@@ -44,7 +44,7 @@ p {
 }
 
 /*	"Players". ;) */
-.player { position: absolute; top: 680px; width: 26px; height: 26px; text-align: center; border: 2px solid #010101; padding: 10px; }
+.player { position: absolute; top: 400px; width: 26px; height: 26px; text-align: center; border: 2px solid #010101; padding: 10px; }
 .player span { background-color: #f9f9f9; padding: 5px 5px 4px; font-weight: bold; }
 #player_1 { background-color: #ef1419; color: #ef1419; left: 500px; }
 #player_2 { background-color: #13c32c; color: #13c32c; left: 580px; }
