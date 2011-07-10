@@ -38,6 +38,8 @@ wiimote.when('pressed_a', function() {
 wiimote2.when('pressed_a', function() {
 	alert('Wiimote #2 pressed the A Button!');
 });
+
+Wii.listen();
 ```
 
 
@@ -64,6 +66,12 @@ var wiimote = new Wii.Remote(1, {horizontal: true}); // Horizontal controls
 var wiimote = new Wii.Remote(1, {horizontal: false}); // Vertical controls
 
 wiimote.opts.horizontal = true; // Change to horizontal scheme.
+```
+
+The final important piece is to start the Wii-event loop; this manages the event dispatcher internally. To do this, simply...
+
+``` javascript
+Wii.listen();
 ```
 
 You can listen for the following events on all controllers:
