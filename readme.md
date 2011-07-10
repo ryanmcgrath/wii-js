@@ -172,6 +172,17 @@ more time to throw at it).
 In short, the builds require Python/Java, but once you've got them all installed you should only need the command above.
 
 
+How is this different from...?
+-------------------------------------------------------------------------------------------------------------------
+I sadly did not find out about [wii.js](http://www.bolinfest.com/wii/overview.php) until after I released this library;
+with respect to the original author, his work only covers the primary Wii Remote and not the extra ones, nor has it
+been updated in years.	While his approach appears to be the same as mine (or mine the same as his), neither one 
+influenced the other, and they're totally separate works.
+
+With the exception of wii.js, I do not know of any other (remaining) Wii interaction Javascript libraries. It's for
+these reasons (and my desire for a simpler API) that I built this. ;)
+
+
 Licensing, etc
 -------------------------------------------------------------------------------------------------------------------
 wii-js is released under an MIT license. Just provide credit where need be if you choose to use this, it's taken quite
