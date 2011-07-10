@@ -44,7 +44,7 @@ p {
 }
 
 /*	"Players". ;) */
-.player { position: absolute; top: 740; width: 46px; height: 46px; border: 2px solid #010101; padding: 10px; }
+.player { position: absolute; top: 680px; width: 46px; height: 46px; border: 2px solid #010101; padding: 10px; }
 .player span { background-color: #f9f9f9; padding: 5px; font-weight: bold; }
 #player_1 { background-color: #ef1419; color: #ef1419; left: 500px; }
 #player_2 { background-color: #13c32c; color: #13c32c; left: 580px; }

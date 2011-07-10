@@ -29,10 +29,10 @@
 		- Ryan McGrath
 	</p>
 	
-	<div id="player_1" class="player">1</div>
-	<div id="player_2" class="player">2</div>
-	<div id="player_3" class="player">3</div>
-	<div id="player_4" class="player">4</div>
+	<div id="player_1" class="player"><span>1</span></div>
+	<div id="player_2" class="player"><span>2</span></div>
+	<div id="player_3" class="player"><span>3</span></div>
+	<div id="player_4" class="player"><span>4</span></div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     <script src="js/wii.js"></script>
@@ -109,8 +109,9 @@
         wiimote4.when('pressed_up', function() { 
             p4.css({'top': parseInt(x[0].style.top) - 50}); 
         });
-
-        Wii.listen();
+		
+		try {
+        Wii.listen(); } catch(e) { }
     </script>
 </body>
 </html>
