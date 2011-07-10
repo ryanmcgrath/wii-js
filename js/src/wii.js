@@ -78,7 +78,7 @@ Wii.listen = function() {
 			 *	dispatched events instead of bitwise checks, but should all default back if another one
 			 *	comes online.
 			 */
-			if(wii_remoteCurrStatus.isBrowsing()) {
+			if(wii_remoteCurrStatus.isBrowsing) {
 				Wii.currentBrowsingRemote = wii_remote;
 			} else {
 				for(var evt in wii_remote.evtsInterestedIn) {
