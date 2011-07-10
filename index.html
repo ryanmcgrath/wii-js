@@ -14,9 +14,9 @@
 	</p>
 	
 	<p>
-		This demo is really simple, and works best with two Wii remotes (Wiimotes). Hold either Wiimote #1 or #2 horizontal (sideways), and use
-		the directional pad to move the box floating in the bottom right corner around. Wiimote #1 will turn the box red and fill it with a "1",
-		and Wiimote #2 will turn the box green and fill it with a "2". Have fun! 
+		This demo is really simple, and works best with all Wii remotes (Wiimotes). Hold a Wiimote horizontal (sideways), and use
+		the directional pad to move a box floating in the bottom right corner around. Wiimote #1 is red, #2 is green, #3 is yellow, #4 is purple. 
+		Have fun! 
 	</p>
 	
 	<p>
@@ -29,69 +29,85 @@
 		- Ryan McGrath
 	</p>
 	
-    <div id="x" style="border: 5px solid #010101; position: absolute; top: 300px; left: 300px; width: 100px; height: 100px; padding: 10px; color: #010101;">x</div>
+	<div id="player_1" class="player">1</div>
+	<div id="player_2" class="player">2</div>
+	<div id="player_3" class="player">3</div>
+	<div id="player_4" class="player">4</div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     <script src="js/wii.js"></script>
     <script>
         var wiimote = new Wii.Remote(1, {horizontal: true}),
             wiimote2 = new Wii.Remote(2, {horizontal: true}),
-            x = $("#x");
-
-        wiimote2.when('pressed_up', function() { 
-            x.html('2').css({
-                'background-color': 'green',
-                'top': parseInt(x[0].style.top) - 50
-            }); 
-        }); 
-        
-        wiimote2.when('pressed_down', function() { 
-            x.html('2').css({
-                'background-color': 'green',
-                'top': parseInt(x[0].style.top) + 50
-            });
-        });
-        
-        wiimote2.when('pressed_right', function() {
-            x.html('2').css({
-                'background-color': 'green',
-                'left': parseInt(x[0].style.left) + 50
-            });
-		});
-
-        wiimote2.when('pressed_left', function() {
-            x.html('2').css({
-                'background-color': 'green',
-                'left': parseInt(x[0].style.left) - 50
-            });
-        });
-
-        wiimote.when('pressed_up', function() { 
-            x.html('1').css({
-                'background-color': 'red',
-                'top': parseInt(x[0].style.top) - 50
-            }); 
-        }); 
+			wiimote3 = new Wii.Remote(3, {horizontal: true}),
+			wiimote4 = new Wii.Remote(4, {horizontal: true}),
+            p1 = $('#player_1'),
+			p2 = $('#player_2'),
+			p3 = $('#player_3'),
+			p4 = $('#player_4');
 
         wiimote.when('pressed_down', function() { 
-            x.html('1').css({
-                'background-color': 'red',
-                'top': parseInt(x[0].style.top) + 50
-            });
+            p1.css({'top': parseInt(x[0].style.top) + 50});
         });
 
         wiimote.when('pressed_right', function() {
-            x.html('1').css({
-                'background-color': 'red',
-                'left': parseInt(x[0].style.left) + 50
-            });
+        	p1.css({'left': parseInt(x[0].style.left) + 50});
+		});
+
+        wiimote.when('pressed_left', function() {
+			p1.css({'left': parseInt(x[0].style.left) - 50});
         });
 
-        wiimote.when('pressed_left', function() { 
-            x.html('1').css({
-                'background-color': 'red',
-                'left': parseInt(x[0].style.left) - 50
-            });
+        wiimote.when('pressed_up', function() { 
+            p1.css({'top': parseInt(x[0].style.top) - 50}); 
+        });
+        
+        wiimote2.when('pressed_down', function() { 
+            p2.css({'top': parseInt(x[0].style.top) + 50});
+        });
+        
+        wiimote2.when('pressed_right', function() {
+        	p2.css({'left': parseInt(x[0].style.left) + 50});
+		});
+
+        wiimote2.when('pressed_left', function() {
+			p2.css({'left': parseInt(x[0].style.left) - 50});
+        });
+
+        wiimote2.when('pressed_up', function() { 
+            p2.css({'top': parseInt(x[0].style.top) - 50}); 
+        }); 
+
+        wiimote3.when('pressed_down', function() { 
+            p3.css({'top': parseInt(x[0].style.top) + 50});
+        });
+        
+        wiimote3.when('pressed_right', function() {
+        	p3.css({'left': parseInt(x[0].style.left) + 50});
+		});
+
+        wiimote3.when('pressed_left', function() {
+			p3.css({'left': parseInt(x[0].style.left) - 50});
+        });
+
+        wiimote3.when('pressed_up', function() { 
+            p3.css({'top': parseInt(x[0].style.top) - 50}); 
+        });
+
+        wiimote4.when('pressed_down', function() { 
+            p4.css({'top': parseInt(x[0].style.top) + 50});
+        });
+        
+        wiimote4.when('pressed_right', function() {
+        	p4.css({'left': parseInt(x[0].style.left) + 50});
+		});
+
+        wiimote4.when('pressed_left', function() {
+			p4.css({'left': parseInt(x[0].style.left) - 50});
+        });
+
+        wiimote4.when('pressed_up', function() { 
+            p4.css({'top': parseInt(x[0].style.top) - 50}); 
         });
 
         Wii.listen();

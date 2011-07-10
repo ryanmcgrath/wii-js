@@ -18,8 +18,35 @@ blockquote, q { quotes: "" ""; }
 
 html {
     color: #333;
-	font: normal 30px/34px helvetica, arial, sans-serif;
+	font: normal 24px/28px helvetica, arial, sans-serif;
 	padding: 0px;
-	text-align: center;
-    background: #f9f9f9;
+    background: #fff;
+	overflow: hidden !important;
 }
+
+body { overflow: hidden !important; padding: 20px; }
+
+h1 { background-color: #42a2cc; color: #f9f9f9; font-size: 50px; padding: 10px; }
+
+a, a:visited { 
+	background-color: #42a2cc; 
+	color: #f9f9f9; 
+	padding: 3px 5px; 
+	text-decoration: none; 
+	display: inline-block;
+}
+
+a:hover { background-color: #147ba8; }
+
+p {
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+/*	"Players". ;) */
+.player { position: absolute; top: 740; width: 46px; height: 46px; border: 2px solid #010101; padding: 10px; }
+.player span { background-color: #f9f9f9; padding: 5px; font-weight: bold; }
+#player_1 { background-color: #ef1419; color: #ef1419; left: 500px; }
+#player_2 { background-color: #13c32c; color: #13c32c; left: 580px; }
+#player_3 { background-color: #e6d01a; color: #e6d01a; left: 660px; }
+#player_4 { background-color: #af0bb1; color: #af0bb1; left: 740px; }
