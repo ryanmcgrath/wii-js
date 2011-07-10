@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Wii.js Demo</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/demo.css">
+</head>
+<body>
+	<h1>Wii.js Demo</h1>
+	<p>
+		This is a demo page meant to show how easy it is to interact with the Nintendo Wii remotes using Javascript. It's
+		powered by <a href="http://github.com/ryanmcgrath/wii-js/">wii-js</a>, a Javascript library that abstracts the differences
+		and pain points associated with using the Wii remotes.
+	</p>
+	
+	<p>
+		This demo is really simple, and works best with two Wii remotes (Wiimotes). Hold either Wiimote #1 or #2 horizontal (sideways), and use
+		the directional pad to move the box floating in the bottom right corner around. Wiimote #1 will turn the box red and fill it with a "1",
+		and Wiimote #2 will turn the box green and fill it with a "2". Have fun! 
+	</p>
+	
+	<p>
+		If you find bugs or want to get in touch, come find me at the project home on <a href="http://github.com/ryanmcgrath/wii-js/">GitHub</a>! You
+		can also find me on Twitter (<a href="http://twitter.com/ryanmcgrath">@ryanmcgrath</a>), or my <a href="http://venodesigns.net/">personal website</a>.
+		I'm always interested in what others are building!
+	</p>
+	
+	<p>
+		- Ryan McGrath
+	</p>
+	
+    <div id="x" style="border: 5px solid #010101; position: absolute; top: 300px; left: 300px; width: 100px; height: 100px; padding: 10px; color: #010101;">x</div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script src="js/wii.js"></script>
+    <script>
+        var wiimote = new Wii.Remote(1, {horizontal: true}),
+            wiimote2 = new Wii.Remote(2, {horizontal: true}),
+            x = $("#x");
+
+        wiimote2.when('pressed_up', function() { 
+            x.html('2').css({
+                'background-color': 'green',
+                'top': parseInt(x[0].style.top) - 50
+            }); 
+        }); 
+        
+        wiimote2.when('pressed_down', function() { 
+            x.html('2').css({
+                'background-color': 'green',
+                'top': parseInt(x[0].style.top) + 50
+            });
+        });
+        
+        wiimote2.when('pressed_right', function() {
+            x.html('2').css({
+                'background-color': 'green',
+                'left': parseInt(x[0].style.left) + 50
+            });
+
+        wiimote2.when('pressed_left', function() {
+            x.html('2').css({
+                'background-color': 'green',
+                'left': parseInt(x[0].style.left) - 50
+            });
+        });
+
+        wiimote.when('pressed_up', function() { 
+            x.html('1').css({
+                'background-color': 'red',
+                'top': parseInt(x[0].style.top) - 50
+            }); 
+        }); 
+
+        wiimote.when('pressed_down', function() { 
+            x.html('1').css({
+                'background-color': 'red',
+                'top': parseInt(x[0].style.top) + 50
+            });
+        });
+
+        wiimote.when('pressed_right', function() {
+            x.html('1').css({
+                'background-color': 'red',
+                'left': parseInt(x[0].style.left) + 50
+            });
+        });
+
+        wiimote.when('pressed_left', function() { 
+            x.html('1').css({
+                'background-color': 'red',
+                'left': parseInt(x[0].style.left) - 50
+            });
+        });
+
+        Wii.listen();
+    </script>
+</body>
+</html>
