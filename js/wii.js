@@ -106,7 +106,7 @@ Wii.listen = function() {
 			} else {
 				for(var evt in wii_remote.evtsInterestedIn) {
 					var evtHappened = Wii.DISPATCHER[evt](wii_remote, wii_remoteCurrStatus);
-					if(evtHappened) wii_remote.evtsInterestedIn[evt](wii_remote, wii_remoteCurrStatus);
+					if(evtHappened) try { wii_remote.evtsInterestedIn[evt](wii_remote, wii_remoteCurrStatus); } catch(e) { alert(e.message); }
 				}
 			}
 		}
