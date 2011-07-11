@@ -17,6 +17,10 @@ To play with a live example, load up the demo (_index.html_) on your own server,
 
 **wii-js Demo: [http://venodesigns.net/wii/](http://venodesigns.net/wii/)**  
 
+Working with the Wii's browser can be odd - it has moderately good support for CSS, so you're never really
+as bad off as you'd be with a version of Internet Explorer - that said, if you're looking for a good read
+on what's supported, check out **[this article on Opera Wii supported technologies](http://www.opera.com/docs/specs/opera9/?platform=wii)**.
+
 Questions, comments, criticism and praise can be directed to me at the following outlets:
 
 - You can email me at **ryan [at] venodesigns (dot) net**.  
@@ -102,7 +106,7 @@ isn't able to see the TV/sensor bar, so be sure to check this!
 of the current webpage + toolbar height, if enabled. Tinker with this one for your purposes.
 
 
-Extra Tips and Tricks
+Extra Tips and Tricks (Debugging)
 ------------------------------------------------------------------------------------------------------------------
 One semi-useful trick to point out about this library is that each of your callback functions get passed two
 arguments by default - a reference to the Wiimote you're working with, and the raw Wiimote status object that the
@@ -118,18 +122,29 @@ wiimote.when('pressed_a', function(wii_remote, wii_remote_status) {
 });
 ```
 
-Debugging Javascript on the Wii is also nothing short of incredibly annoying, so I've included a convenience function
-for running through error messages. My typical debugging strategy with any Wii-related code would always start with
-the following:
+Debugging Javascript on the Wii is also nothing short of incredibly annoying, so I've made some efforts to patch this
+up and make life a bit earier. My typical debugging strategy with any Wii-related code would always start with
+the following. The first thing to do is set the Wii listener to run in debug mode, like so:
+
+``` javascript
+Wii.listen({debug: true});
+```
+
+With this set, you can log errors with any of the following functions. `error` can be a string or a complex object.
+
+- **console.log(error);** - Tried and true, now supported.  
+- **console.debug(error);** - Same as console.log here, but syntax is supported.  
+- **throw new Error(error);** - Throw them, they'll be logged.  
+- **Wii.util.debug(error);** - The core function that handles logging internally.
+
+If the typical Wii debugging flow isn't enough for you, go aggressive with this - just be aware that you can crash
+the Wii's browser if you're using try/catch all over the place, as it's not cheap in Javascript.
 
 ``` javascript
 try {
-    // Whatever function I execute
+    // Whatever function to execute
 } catch(e) { Wii.util.debug(e); }
 ```
-
-The rate at which this function will improve is commensurate with how much more time and effort I can afford to put
-into this project. Feel free to fork/patch/enhance if you need more. ;)
 
 
 Why the button limitations?

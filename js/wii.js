@@ -381,21 +381,25 @@ Wii.util = {
 	 *	try { ... } catch(e) { Wii.util.debug(e); }
 	 */
 	debug: function(err) {
+		if(!Wii.debug) return;
+		
 		if(Wii.util.msgNode === null) {
 			Wii.util.msgNode = document.createElement('div');
 			
 			Wii.util.msgNode.style.cssText = [
-				'min-width: 776px;',
+				'min-width: 780px;',
 				'padding: 10px;',
 				'font-size: 28px;',
 				'line-height: 32px;',
 				'font-family: monospace;',
 				'position: absolute;',
-				'top: 20px;',
+				'top: 15px;',
+				'left: 0;',
 				'color: #f9f9f9;',
 				'background-color: #010101;',
-				'border: 2px solid #42a2cc;',
-				'opacity: .8',
+				'border-bottom: 2px solid #42a2cc;',
+				'opacity: .7;',
+				'font-weight: bold;'
 			].join('');
 			
 			Wii.util.msgNode.addEventListener('click', Wii.util.hideDebugger, false);
@@ -436,6 +440,26 @@ Wii.util = {
 		};
 	}	
 };
+/**
+ *	console.js
+ *
+ *	A lightweight wrapper for the now-common "console" object in browsers.
+ *	Really just maps calls over to the wii-js internal Wii.util.debug() call,
+ *	but exists so that if you use this in production code for whatever reason
+ *	it could still be used to debug on the Wii.
+ *
+ *	Note that for this to work, you must be listening in debug mode!
+ *
+ *	@Author: Ryan McGrath <ryan@venodesigns.net>
+ *	@Requires: wii.js, util.js
+ */
+
+if(typeof window.console === 'undefined') {
+	window.console = {
+		log: Wii.util.debug,
+		debug: Wii.util.debug
+	};
+}
 /**
  *	remote.js
  *

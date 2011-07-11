@@ -31,21 +31,25 @@ Wii.util = {
 	 *	try { ... } catch(e) { Wii.util.debug(e); }
 	 */
 	debug: function(err) {
+		if(!Wii.debug) return;
+		
 		if(Wii.util.msgNode === null) {
 			Wii.util.msgNode = document.createElement('div');
 			
 			Wii.util.msgNode.style.cssText = [
-				'min-width: 776px;',
+				'min-width: 780px;',
 				'padding: 10px;',
 				'font-size: 28px;',
 				'line-height: 32px;',
 				'font-family: monospace;',
 				'position: absolute;',
-				'top: 20px;',
+				'top: 15px;',
+				'left: 0;',
 				'color: #f9f9f9;',
 				'background-color: #010101;',
-				'border: 2px solid #42a2cc;',
-				'opacity: .8',
+				'border-bottom: 2px solid #42a2cc;',
+				'opacity: .7;',
+				'font-weight: bold;'
 			].join('');
 			
 			Wii.util.msgNode.addEventListener('click', Wii.util.hideDebugger, false);

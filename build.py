@@ -26,6 +26,7 @@ currdir = os.getcwd()
 DEPENDENCIES = [
 	'wii',
 	'util',
+	'console',
 	'remote',
 ]
 
