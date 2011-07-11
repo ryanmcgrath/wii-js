@@ -80,6 +80,8 @@ Wii.installListeners = function() {
 		for(var i = 0, j = Wii.primaryWiimoteEvts.length; i < j; i++) { 
 			document.removeEventListener(Wii.primaryWiimoteEvts[i], Wii.parsePrimaryWiimote, false);
 		}
+		
+		if(Wii.util.msgNode) Wii.util.msgNode.removeEventListener('click', Wii.util.hideDebugger, false);
 	};
 	
 	/**

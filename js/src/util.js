@@ -53,14 +53,14 @@ Wii.util = {
 		}
 		
 		if(typeof err === 'string') {
-			Wii.debuggerDiv.innerHTML = err;
+			Wii.util.msgNode.innerHTML = err;
 		} else {
 			var msg = '';
 			for(var e in err) { msg += '<span style="color: #42a2cc; font-weight: bold;">' + e + '</span>=' + err[e] + '<br>'; }
-			Wii.debuggerDiv.innerHTML = msg;
+			Wii.util.msgNode.innerHTML = msg;
 		}
 		
-		Wii.debuggerDiv.style.display = 'block';
+		Wii.util.msgNode.style.display = 'block';
 	},
 	
 	/**
