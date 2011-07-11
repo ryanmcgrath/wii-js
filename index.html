@@ -37,6 +37,7 @@
 			p4 = $('#player_4');
 
         wiimote.when('pressed_down', function() { 
+			Wii.util.debug('LOL');
 			throw new Error('LOL');
             p1.css({'top': p1.position().top + 50});
         });

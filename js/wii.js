@@ -78,7 +78,7 @@ var Wii = {
 	 *	to do rapid-quick checks for the primary Wii-mote as to multiple-button
 	 *	press scenarios (among some other things).
 	 */
-	primaryWiimoteEvts: ['mouseup', 'mousedown', 'keyup', 'keydown', 'keypress'],
+	primaryWiimoteEvts: ['mouseup', 'mousedown', 'keyup', 'keydown', 'keypress']
 };
 
 /**
@@ -391,10 +391,10 @@ Wii.util = {
 				'line-height: 32px;',
 				'font-family: monospace;',
 				'position: absolute;',
-				'top: 10px;',
+				'top: 20px;',
 				'left: 10px;',
 				'color: #f9f9f9;',
-				'background-color: rgba(44, 44, 44, .7);',
+				'background-color: #010101;',
 				'border: 2px solid #42a2cc;'
 			].join('');
 			

@@ -55,7 +55,7 @@ var Wii = {
 	 *	to do rapid-quick checks for the primary Wii-mote as to multiple-button
 	 *	press scenarios (among some other things).
 	 */
-	primaryWiimoteEvts: ['mouseup', 'mousedown', 'keyup', 'keydown', 'keypress'],
+	primaryWiimoteEvts: ['mouseup', 'mousedown', 'keyup', 'keydown', 'keypress']
 };
 
 /**
