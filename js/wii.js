@@ -385,17 +385,17 @@ Wii.util = {
 			Wii.util.msgNode = document.createElement('div');
 			
 			Wii.util.msgNode.style.cssText = [
-				'min-width: 756px;',
+				'min-width: 776px;',
 				'padding: 10px;',
 				'font-size: 28px;',
 				'line-height: 32px;',
 				'font-family: monospace;',
 				'position: absolute;',
 				'top: 20px;',
-				'left: 10px;',
 				'color: #f9f9f9;',
 				'background-color: #010101;',
-				'border: 2px solid #42a2cc;'
+				'border: 2px solid #42a2cc;',
+				'opacity: .8',
 			].join('');
 			
 			Wii.util.msgNode.addEventListener('click', Wii.util.hideDebugger, false);
