@@ -123,7 +123,7 @@ wiimote.when('pressed_a', function(wii_remote, wii_remote_status) {
 ```
 
 Debugging Javascript on the Wii is also nothing short of incredibly annoying, so I've made some efforts to patch this
-up and make life a bit earier. My typical debugging strategy with any Wii-related code would always start with
+up and make life a bit easier. My typical debugging strategy with any Wii-related code would always start with
 the following. The first thing to do is set the Wii listener to run in debug mode, like so:
 
 ``` javascript
