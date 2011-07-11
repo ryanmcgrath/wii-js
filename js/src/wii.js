@@ -23,31 +23,86 @@ var Wii = {
 	 *	through on each loop/iteration and poll for a new status on it.
 	 */
 	extraRemotes: [],
+	
+	/**
+	 *	A "global" reference to the (current) primary Wiimote. This can change if the
+	 *	primary Wiimote runs out of battery, and the library shoul transparently account
+	 *	for this.
+	 */
 	currentBrowsingRemote: null,
-	setKeyListeners: false,
-	debuggerDiv: null	
+	
+	/**
+	 *	Internal flag for whether or not we've actually set some document event listeners.
+	 *	A little messy, sure, but not the biggest guffaw in the world.
+	 */
+	setListeners: false,
+	
+	/**
+	 *	A global debug flag. If this is enabled/set to true, any errors raised will be thrown
+	 *	up on the screen for the Wii. Should be set when the initial .listen() request is fired.
+	 *
+	 *		e.g, Wii.listen({debug: true});
+	 */
+	debug: false,
+	
+	/**
+	 *	The primary Wiimote depends on typical DOM-esque events to communicate what actions it's
+	 *	doing, and the other three use a whole bitmask-esque scenario. This is a "global" Array of
+	 *	the events we're interested in for the primary Wiimote.
+	 *
+	 *	We catch multiple begin/endpoints for these full event "scopes" for 
+	 *	future use, as it seems like it'll probably be the most performant way
+	 *	to do rapid-quick checks for the primary Wii-mote as to multiple-button
+	 *	press scenarios (among some other things).
+	 */
+	primaryWiimoteEvts: ['mouseup', 'mousedown', 'keyup', 'keydown', 'keypress'],
 };
 
 /**
+ *	Wii.installListeners()
+ *
  *	Install some basic low-level event listeners to monitor how
  *	the primary wii_remote is interacting with the browser; it's treated
  *	differently than the other wii_remotes, more as a "browsing" tool than
  *	a controller. Doesn't mean we can't try and mend the gap...
  */
-Wii.installKeyListeners = function() {
-	document.addEventListener('mouseup', Wii.parsePrimaryWiimote, false);
-	document.addEventListener('keydown', Wii.parsePrimaryWiimote, false);
-	document.addEventListener('mousedown', Wii.parsePrimaryWiimote, false);
-	document.addEventListener('keyup', Wii.parsePrimaryWiimote, false);
-
+Wii.installListeners = function() {
+	for(var i = 0, j = Wii.primaryWiimoteEvts.length; i < j; i++) { 
+		document.addEventListener(Wii.primaryWiimoteEvts[i], Wii.parsePrimaryWiimote, false);
+	}
+	
 	/**
-	 *	Some keys, like the directional ones, get... multiple events?
-	 *	In this case, just shut. down. everything.
-	 *
-	 *	...and let the programmer deal with it.
+	 *	Since the Wii is already a fairly low-spec system, it's definitely worth
+	 *	cleaning up after ourselves if we can get around to it. This should (hopefully)
+	 *	take care of most of what we need to worry about.
 	 */
-	document.addEventListener('keypress', Wii.parsePrimaryWiimote, false);
-
+	window.onbeforeunload = function() {
+		for(var i = 0, j = Wii.primaryWiimoteEvts.length; i < j; i++) { 
+			document.removeEventListener(Wii.primaryWiimoteEvts[i], Wii.parsePrimaryWiimote, false);
+		}
+	};
+	
+	/**
+	 *	If this is all listening in debug mode, we wanna try and catch everything that could
+	 *	possibly go wrong in the stack. try/catch is very expensive for the entire program, and can 
+	 *	crash the Wii pretty easily if you push it too much.
+	 *
+	 *	What we'll do instead is just patch the seemingly un-documented window.Error function to suit our
+	 *	debugging needs, and only try/catch while in debug mode in critical places (e.g, the constant polling
+	 *	section would be... yeah, not a fun idea).
+	 *
+	 *	With this, "throw new Error(error)" will actually hit over to what we want, and anything else (outside code)
+	 *	using it will get the on-screen Wii debug which is actually useful. That's why we bother doing this, instead
+	 *	of just calling Wii.util.debug() everywhere. ;)
+	 */
+	if(Wii.debug) {
+		Wii.util.originalErrFunction = window.Error;
+		window.Error = function() {
+			if(arguments.length > 0) Wii.util.debug(arguments[0]);
+			else Wii.util.originalErrFunction.apply(this, arguments);
+		}
+	}
+	
 	return true;
 };
 
@@ -57,8 +112,12 @@ Wii.installKeyListeners = function() {
  *	The main game loop. This must stay very performant; try to keep things as absolutely
  *	low-level as possible here.
  */
-Wii.listen = function() {
-	if(!Wii.setKeyListeners) Wii.setKeyListeners = Wii.installKeyListeners();
+Wii.listen = function(optional_opts) {
+	if(typeof optional_opts !== 'undefined') {
+		if(typeof optional_opts.debug !== 'undefined' && optional_opts.debug) Wii.debug = true;
+	}
+	
+	if(!Wii.setListeners) Wii.setListeners = Wii.installListeners();
 	
 	var i = Wii.extraRemotes.length;
 	
