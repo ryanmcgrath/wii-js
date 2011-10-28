@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Introducing Wii.js</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/presentation.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/arta.min.css">
+	<style>.keyword { color: #ea1fb8 !important; }</style>
+</head>
+<body>
+	<h1>Wii-js</h1>
+
+	<div class="slide" id="intro">
+		<h2>Who I am</h2>
+		<ul>
+			<li>Senior Engineer, myGengo</li>
+			<li>Author of MapRejuice, wrench-js, others</li>
+			<li><a href="http://github.com/ryanmcgrath">github.com/ryanmcgrath</a></li>
+		</ul>
+	</div>
+	
+	<div class="slide" id="why">
+		<h2>Why did I make this?</h2>
+		<ul>
+			<li>No decent API for the Wii Web Browser existed</li>
+			<li>Nintendo doesn't want it to exist...</li>
+			<li>Great way to teach children how to program</li>
+		</ul>
+	</div>
+	
+	<div class="slide" id="quirks">
+		<h2>Wii Browser & Quirks</h2>
+		<ul id="quirksul">
+			<li><strong>Opera 9.26</strong> - CSS2.1, &lt;canvas&gt;, SVG, and more...</li>
+			<li>Annoying memory limits (~88MB entire system, Browser is far less)</li>
+			<li><strong>Repaint slower</strong>; repeated timeouts less than 100ms causes the Wii to freeze up</li>
+			<li><strong>Only Wii Remotes work</strong>; no other controller types usable. :(</li>
+			<li>Leave type="" off &lt;script&gt; tags, or they won't work sometimes</li>
+		</ul>
+	</div>
+	
+	<div class="slide" id="js">
+		<h2>Wii-js API (Event Based)</h2>
+		<ul style="list-style-type: none; margin-left: 15px;">
+			<li id="code1">
+<pre>var wiimote = new Wii.Remote(1, {horizontal: true}),
+    wiimote2 = new Wii.Remote(2, {horizontal: true});
+
+wiimote.when('pressed_a', function() {
+    alert('A Button on Wiimote 1 Pressed!');
+});
+
+wiimote2.when('pressed_a', function() {
+    alert('Right Button on Wiimote 2 Pressed!');
+});
+</pre>
+			</li>
+		</ul>
+	</div>
+
+	<div class="slide" id="node">
+		<h2>Opera on Wii has [[[Server-Sent-Events]]]!</h2>
+		<ul style="list-style-type: none; margin-left: 15px;">
+			<li id="code2">
+<pre>var http = require('http');
+
+function sendEvents(response) {
+    response.write('id: ' + (new Date()).toLocaleTimeString() + '\n');
+    response.write('data: ' + (Math.floor(Math.random() * 10000) + 2) + '\n');
+    
+    setTimeout(function() {
+        sendEvents(response);
+    }, 5000);
+}
+
+http.createServer(function(request, response) {
+    response.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+    });
+    sendEvents(response);
+}).listen(8000);
+</pre>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="slide" id="thanks">
+		<h2>Thanks!</h2>
+		<ul>
+			<li><strong>Twitter:</strong> <a href="http://twitter.com/ryanmcgrath">@ryanmcgrath</a></li>
+			<li><strong>Wii-js on GitHub:</strong> <a href="http://github.com/ryanmcgrath/wii-js">http://github.com/ryanmcgrath/wii-js</a></li>
+			<li><strong>Demo:</strong> <a href="http://venodesigns.net/wii/">http://venodesigns.net/wii</a>
+		</ul>
+	</div>
+
+	<script src="js/wii.js"></script>
+    <script src="js/slides.js"></script>
+	<script src="js/highlight.min.js"></script>
+	<script>
+		hljs.highlightBlock(document.getElementById('code1'), null, false);
+		hljs.highlightBlock(document.getElementById('code2'), null, false);
+	</script>
+</body>
+</html>
