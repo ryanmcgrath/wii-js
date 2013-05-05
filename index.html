@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wii-js by ryanmcgrath</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Wii-js</h1>
+        <p>A sane, documented, (hopefully) performant event-based library for Wiimote webpage interaction.</p>
+        <p class="view"><a href="https://github.com/ryanmcgrath/wii-js">View the Project on GitHub <small>ryanmcgrath/wii-js</small></a></p>
+        <ul>
+          <li><a href="https://github.com/ryanmcgrath/wii-js/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ryanmcgrath/wii-js/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ryanmcgrath/wii-js">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>wii-js</h1>
+
+<p>The Nintendo Wii is an entertainment system with an utterly <em>massive</em> install base, and when 
+you couple it with the fact that it's got a web browser (mostly) built in, there's a lot of
+potential for third party development. Sadly, few have opted to do any sort of development for
+it. While it doesn't help that Nintendo pretty much dropped the ball on this opportunity, the
+experience of browsing the web on the Wii isn't actually that compelling to begin with.</p>
+
+<p>That said, I think this can serve one other purpose: it's an ideal environment to teach children
+how to program! I created this library to sanitize Wii interaction with webpages in the browser,
+as it's notoriously crippled. It aims to offer a solid, documented, performant API that's easy to 
+understand and pick up. With this library, you can have up to 4 Wii-motes interacting with your
+webpage at once, a dynamic not found in other web browsing mediums.</p>
+
+<p>You can find a built source file and a <em>minified</em> source file for production use in the <strong>/js/</strong> directory.
+To play with a live example, load up the demo (_index.html_) on your own server, or feel free to use mine:</p>
+
+<p><strong>wii-js Demo: <a href="http://venodesigns.net/wii/">http://venodesigns.net/wii/</a></strong>  </p>
+
+<p>Working with the Wii's browser can be odd - it has moderately good support for CSS, so you're never really
+as bad off as you'd be with a version of Internet Explorer - that said, if you're looking for a good read
+on what's supported, check out <strong><a href="http://www.opera.com/docs/specs/opera9/?platform=wii">this article on Opera Wii supported technologies</a></strong>.</p>
+
+<p>Questions, comments, criticism and praise can be directed to me at the following outlets:</p>
+
+<ul>
+<li>You can email me at <strong>ryan [at] venodesigns (dot) net</strong>.<br>
+</li>
+<li>You can hit me up on Twitter: <strong><a href="http://twitter.com/ryanmcgrath/">@ryanmcgrath</a></strong><br>
+</li>
+<li>Contact me through <strong><a href="http://venodesigns.net">my website</a></strong><br>
+</li>
+<li>
+<strong>Technical issues can be filed on the <a href="https://github.com/ryanmcgrath/wii-js/issues">wii-js GitHub Issues Tracker</a></strong><br>
+</li>
+</ul><h2>Example Usage</h2>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">wiimote</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Wii</span><span class="p">.</span><span class="nx">Remote</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="nx">horizontal</span><span class="o">:</span> <span class="kc">true</span><span class="p">}),</span>
+    <span class="nx">wiimote2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Wii</span><span class="p">.</span><span class="nx">Remote</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">{</span><span class="nx">horizontal</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+
+<span class="nx">wiimote</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">'pressed_a'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">'Wiimote #1 pressed the A Button!'</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">wiimote2</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">'pressed_a'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">'Wiimote #2 pressed the A Button!'</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">Wii</span><span class="p">.</span><span class="nx">listen</span><span class="p">();</span>
+</pre></div>
+
+<h2>Technical Documentation</h2>
+
+<p>The largest issue with making interactive pages that work with the Wii has been that the API has
+been nothing short of a black hole. When you actually begin to dig in and figure out what's going on,
+it gets even uglier to see - the primary wiimote, for instance, has a totally different set of signals
+than the other three.</p>
+
+<p>wii-js abstracts away most of these differences and/or problems, and works on a very simple event-dispatch 
+system. What this means is that you create an instance of a Wii Remote, subscribe to events, and provide a
+function to get called when that event has occurred. The following syntax should explain this:</p>
+
+<div class="highlight"><pre><span class="nx">wiimote</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">'event_name_here'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* My callback function */</span> <span class="p">});</span>
+</pre></div>
+
+<p>When instantiating a Wii Remote instance, you can choose to have the library interpret directional pad controls
+in horizontal or vertical mode. You can change this at any point, if you want, by simply swapping the property.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">wiimote</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Wii</span><span class="p">.</span><span class="nx">Remote</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="nx">horizontal</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span> <span class="c1">// Horizontal controls</span>
+<span class="kd">var</span> <span class="nx">wiimote</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Wii</span><span class="p">.</span><span class="nx">Remote</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="nx">horizontal</span><span class="o">:</span> <span class="kc">false</span><span class="p">});</span> <span class="c1">// Vertical controls</span>
+
+<span class="nx">wiimote</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nx">horizontal</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// Change to horizontal scheme.</span>
+</pre></div>
+
+<p>The final important piece is to start the Wii-event loop; this manages the event dispatcher internally. To do this, simply...</p>
+
+<div class="highlight"><pre><span class="nx">Wii</span><span class="p">.</span><span class="nx">listen</span><span class="p">();</span>
+</pre></div>
+
+<p>You can listen for the following events on all controllers:</p>
+
+<ul>
+<li>
+<strong>pressed_up</strong> - The up button was pressed.<br>
+</li>
+<li>
+<strong>pressed_down</strong> - The down button was pressed.<br>
+</li>
+<li>
+<strong>pressed_left</strong> - The left button was pressed.<br>
+</li>
+<li>
+<strong>pressed_right</strong> - The right button was pressed.<br>
+</li>
+<li>
+<strong>pressed_a</strong> - The A button was pressed.<br>
+</li>
+<li>
+<strong>pressed_1</strong> - The 1 button was pressed. (_Note: On controller 1, this triggers a menu - work in progress..._)<br>
+</li>
+<li>
+<strong>pressed_2</strong> - The 2 button was pressed.<br>
+</li>
+<li>
+<strong>pressed_plus</strong> - The plus (+) button was pressed.<br>
+</li>
+<li>
+<strong>pressed_minus</strong> - The minus (-) button was pressed.<br>
+</li>
+<li>
+<strong>roll_change</strong> - The roll of the controller (balance) changed. You can get the current roll in radians with <em>"this.roll"</em>; positive is upright, negative is the other.<br>
+</li>
+<li>
+<strong>distance_change</strong> - The distance of the wiimote (in meters) from the TV/sensor bar has changed. This event isn't totally reliable, but should work for most cases.<br>
+</li>
+</ul><p>You can listen for the following events on <em>extra controllers</em>, but not the primary controller.</p>
+
+<ul>
+<li>
+<strong>pressed_b</strong> - The B button was pressed.<br>
+</li>
+<li>
+<strong>pressed_c</strong> - The C button (on the Nunchuk) was pressed.<br>
+</li>
+<li>
+<strong>pressed_z</strong> - The Z button (on the Nunchuk) was pressed.<br>
+</li>
+</ul><p>You can also get the following properties from any Wii Remote instance; they will return "undefined" if the remote
+isn't able to see the TV/sensor bar, so be sure to check this!</p>
+
+<ul>
+<li>
+<strong>x</strong> - The x coordinate where the Wii Remote is pointing to on the screen. Generally between 0 and 800, but can be more on wide pages.</li>
+<li>
+<strong>y</strong> - The y coordinate where the Wii Remote is pointing to on the screen. Odd one; can be found as low as -48, as high as the height
+of the current webpage + toolbar height, if enabled. Tinker with this one for your purposes.</li>
+</ul><h2>Extra Tips and Tricks (Debugging)</h2>
+
+<p>One semi-useful trick to point out about this library is that each of your callback functions get passed two
+arguments by default - a reference to the Wiimote you're working with, and the raw Wiimote status object that the
+Wii reports back to the library. You get this in a normalized fashion, instead of having to deal with the odd polling
+issues present in the browser.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">wiimote</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Wii</span><span class="p">.</span><span class="nx">Remote</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="nx">horizontal</span><span class="o">:</span> <span class="kc">false</span><span class="p">});</span>
+
+<span class="nx">wiimote</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">'pressed_a'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">wii_remote</span><span class="p">,</span> <span class="nx">wii_remote_status</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/*  Alert an internal confidence level provided by the Wii. */</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">wii_remote_status</span><span class="p">.</span><span class="nx">dpdValidity</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>Debugging Javascript on the Wii is also nothing short of incredibly annoying, so I've made some efforts to patch this
+up and make life a bit easier. My typical debugging strategy with any Wii-related code would always start with
+the following. The first thing to do is set the Wii listener to run in debug mode, like so:</p>
+
+<div class="highlight"><pre><span class="nx">Wii</span><span class="p">.</span><span class="nx">listen</span><span class="p">({</span><span class="nx">debug</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+</pre></div>
+
+<p>With this set, you can log errors with any of the following functions. <code>error</code> can be a string or a complex object.</p>
+
+<ul>
+<li>
+<strong>console.log(error);</strong> - Tried and true, now supported.<br>
+</li>
+<li>
+<strong>console.debug(error);</strong> - Same as console.log here, but syntax is supported.<br>
+</li>
+<li>
+<strong>throw new Error(error);</strong> - Throw them, they'll be logged.<br>
+</li>
+<li>
+<strong>Wii.util.debug(error);</strong> - The core function that handles logging internally.</li>
+</ul><p>If the typical Wii debugging flow isn't enough for you, go aggressive with this - just be aware that you can crash
+the Wii's browser if you're using try/catch all over the place, as it's not cheap in Javascript.</p>
+
+<div class="highlight"><pre><span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// Whatever function to execute</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nx">Wii</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span> <span class="p">}</span>
+</pre></div>
+
+<h2>Why the button limitations?</h2>
+
+<p>The Nintendo Wii treats the primary controller differently than the other ones, and doesn't report any action
+from the Nunchuk, nor does it report when someone has pressed the "B" button on the primary controller (as it's used
+for scrolling a page).</p>
+
+<p>The Wii Browser also doesn't report data for Gamecube controllers, the Classic controller, or any other accessories.</p>
+
+<p>It's a work in progress to see what can be done about these, but it's impossible to guarantee anything will come out
+of it unless Nintendo and/or Opera can come out with something new.</p>
+
+<h2>Known Issues</h2>
+
+<p><strong>Primary Wiimote is a bit more responsive than the extra 3</strong><br>
+This library works by polling the status of the three extra Wii-remotes in 100ms intervals and dispatching events
+based on this. Anything lower than 100ms causes the Wii to run into memory limitations, and the single-threaded
+nature of the browser doesn't really help this issue.</p>
+
+<p>The primary Wii-remote uses an odd combination of DOM-esque callbacks; due to this, it reports <em>more frequently</em> than
+the other Wii-remotes. It's not a showstopper by any means, but for small games it would in theory give a weighted advantage.
+I'll probably end up throttling this through the library by means of a flag, e.g "game_mode": true in the initial options.</p>
+
+<h2>Todo List</h2>
+
+<ul>
+<li>Build in functionality for multiple button presses at the same time (difficult to get right in this environment)</li>
+<li>Determine canceling B-button/scrolling on pages ("app"/"game" style)</li>
+<li>Determine feasibility of canceling out "1" press on the primary Wii-remote.</li>
+</ul><h2>Building and Developing</h2>
+
+<p>If you'd like to help with this library, you're more than welcome to. Simply fork it on GitHub, work away, then
+issue me a pull request. I generally respond within 24 hours.</p>
+
+<p>The build system here is pretty simple - edits and changes go into the /js/src/ files, and you can run</p>
+
+<pre><code>python build.py  
+</code></pre>
+
+<p>from the main directory to build a new version. The minifier here is YUI; Closure/UglifyJS are more aggressive, and
+for some reason throw ridiculous issues in the Wii's browser that I've been unable to track down (and I don't have
+more time to throw at it).</p>
+
+<p>In short, the builds require Python/Java, but once you've got them all installed you should only need the command above.</p>
+
+<h2>How is this different from...?</h2>
+
+<p>I sadly did not find out about <a href="http://www.bolinfest.com/wii/overview.php">wii.js</a> until after I released this library;
+with respect to the original author, his work only covers the primary Wii Remote and not the extra ones, nor has it
+been updated in years.  While his approach appears to be the same as mine (or mine the same as his), neither one 
+influenced the other, and they're totally separate works.</p>
+
+<p>With the exception of wii.js, I do not know of any other (remaining) Wii interaction Javascript libraries. It's for
+these reasons (and my desire for a simpler API) that I built this. ;)</p>
+
+<h2>Licensing, etc</h2>
+
+<p>wii-js is released under an MIT license. Just provide credit where need be if you choose to use this, it's taken quite
+a bit of my time to decipher the utterly random pieces and intricacies of this Javascript engine. ;)</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/ryanmcgrath">ryanmcgrath</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-40660943-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
